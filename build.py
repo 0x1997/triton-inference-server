@@ -1344,8 +1344,7 @@ RUN ARCH="$(uname -i)" && \
     rm -fr ${TRT_ROOT}/samples  ${TRT_ROOT}/targets/${ARCH}-linux-gnu/samples
 # Install required packages for TRT-LLM models
 RUN python3 -m pip install --upgrade pip && \
-        pip3 install transformers && \
-        pip3 install torch
+        pip3 install transformers
 # Uninstall unused nvidia packages
 RUN if pip freeze | grep -q "nvidia.*"; then \
         pip freeze | grep "nvidia.*" | xargs pip uninstall -y; \
