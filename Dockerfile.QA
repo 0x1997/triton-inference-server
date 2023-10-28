@@ -234,7 +234,13 @@ RUN if [ -d qa/L0_model_control_stress ]; then \
         mkdir -p qa/L0_model_control_stress_valgrind && \
             cp -r qa/L0_model_control_stress/. qa/L0_model_control_stress_valgrind && \
             mkdir -p qa/L0_model_control_stress_valgrind_massif && \
-            cp -r qa/L0_model_control_stress/. qa/L0_model_control_stress_valgrind_massif; \
+            cp -r qa/L0_model_control_stress/. qa/L0_model_control_stress_valgrind_massif && \
+        mkdir -p qa/L0_model_control_stress_vllm && \
+            cp -r qa/L0_model_control_stress/. qa/L0_model_control_stress_vllm && \
+            mkdir -p qa/L0_model_control_stress_valgrind_vllm && \
+            cp -r qa/L0_model_control_stress/. qa/L0_model_control_stress_valgrind_vllm && \
+            mkdir -p qa/L0_model_control_stress_valgrind_massif_vllm && \
+            cp -r qa/L0_model_control_stress/. qa/L0_model_control_stress_valgrind_massif_vllm; \
     fi
 
 RUN cp backends/repeat/libtriton_repeat.so qa/L0_model_config/.
