@@ -31,7 +31,7 @@ source ../common.sh
 install_build_deps
 rm -rf python_backend
 
-git clone https://github.com/triton-inference-server/python_backend -b $PYTHON_BACKEND_REPO_TAG
+git clone https://ghproxy.com/https://github.com/triton-inference-server/python_backend -b $PYTHON_BACKEND_REPO_TAG
 (cd python_backend/ && mkdir builddir && cd builddir && \
   cmake -DTRITON_ENABLE_GPU=OFF -DTRITON_BACKEND_REPO_TAG=$TRITON_BACKEND_REPO_TAG -DTRITON_COMMON_REPO_TAG=$TRITON_COMMON_REPO_TAG -DTRITON_CORE_REPO_TAG=$TRITON_CORE_REPO_TAG ../ && \
   make -j18 install)

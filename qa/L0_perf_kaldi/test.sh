@@ -30,7 +30,7 @@ TRITON_VERSION="20.05"
 
 cd /workspace
 git clone --single-branch --depth=1 -b r${TRITON_VERSION} \
-    https://github.com/NVIDIA/triton-inference-server.git
+    https://ghproxy.com/https://github.com/0x1997/triton-inference-server.git
 
 echo "add_subdirectory(kaldi-asr-client)" >> triton-inference-server/src/clients/c++/CMakeLists.txt
 

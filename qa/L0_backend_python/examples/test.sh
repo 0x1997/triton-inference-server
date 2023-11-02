@@ -53,7 +53,7 @@ if [ "$TEST_JETSON" == "0" ]; then
     pip3 install --upgrade "jax[cuda12_local]" -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
 fi
 
-git clone https://github.com/triton-inference-server/python_backend -b $PYTHON_BACKEND_REPO_TAG
+git clone https://ghproxy.com/https://github.com/triton-inference-server/python_backend -b $PYTHON_BACKEND_REPO_TAG
 cd python_backend
 
 # Example 1

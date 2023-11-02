@@ -49,7 +49,7 @@ rm -f *.log.*
 # Get the proto files from the common repo
 rm -fr common
 git clone --single-branch --depth=1 -b $TRITON_COMMON_REPO_TAG \
-    https://github.com/triton-inference-server/common.git
+    https://ghproxy.com/https://github.com/triton-inference-server/common.git
 cp common/protobuf/*.proto java/library/src/main/proto/.
 
 # Compile library

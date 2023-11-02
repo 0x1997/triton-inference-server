@@ -81,7 +81,7 @@ cp ../../python_models/dlpack_identity/config.pbtxt models/dlpack_identity
 
 cp -r ${DATADIR}/qa_sequence_implicit_model_repository/onnx_nobatch_sequence_int32/ ./models
 
-git clone https://github.com/triton-inference-server/python_backend -b $PYTHON_BACKEND_REPO_TAG
+git clone https://ghproxy.com/https://github.com/triton-inference-server/python_backend -b $PYTHON_BACKEND_REPO_TAG
 mkdir -p models/square_int32/1/
 cp python_backend/examples/decoupled/square_model.py models/square_int32/1/model.py
 cp python_backend/examples/decoupled/square_config.pbtxt models/square_int32/config.pbtxt

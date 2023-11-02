@@ -80,7 +80,7 @@ echo "parameters { key: \"MAX_BATCH_VOLUME_BYTES\" value: {string_value: \"96\"}
 
 # Create custom batching libraries
 git clone --single-branch --depth=1 -b $TRITON_BACKEND_REPO_TAG \
-    https://github.com/triton-inference-server/backend.git
+    https://ghproxy.com/https://github.com/triton-inference-server/backend.git
 
 (cd backend/examples/batching_strategies/volume_batching &&
  mkdir build &&

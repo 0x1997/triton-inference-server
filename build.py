@@ -847,8 +847,9 @@ def install_dcgm_libraries(dcgm_version, target_machine):
 ENV DCGM_VERSION {}
 # Install DCGM. Steps from https://developer.nvidia.com/dcgm#Downloads
 RUN curl -o /tmp/cuda-keyring.deb \
-    https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/sbsa/cuda-keyring_1.0-1_all.deb \
+    https://mirrors.cloud.tencent.com/nvidia-cuda/ubuntu2204/sbsa/cuda-keyring_1.0-1_all.deb \
     && apt install /tmp/cuda-keyring.deb && rm /tmp/cuda-keyring.deb && \
+    sed -i 's|https://developer.download.nvidia.com/compute/cuda/repos|https://mirrors.cloud.tencent.com/nvidia-cuda|g' /etc/apt/sources.list.d/cuda-ubuntu2204-x86_64.list && \
     apt-get update && apt-get install -y datacenter-gpu-manager=1:{}
 """.format(
                 dcgm_version, dcgm_version
@@ -858,8 +859,9 @@ RUN curl -o /tmp/cuda-keyring.deb \
 ENV DCGM_VERSION {}
 # Install DCGM. Steps from https://developer.nvidia.com/dcgm#Downloads
 RUN curl -o /tmp/cuda-keyring.deb \
-    https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.0-1_all.deb \
+    https://mirrors.cloud.tencent.com/nvidia-cuda/ubuntu2204/x86_64/cuda-keyring_1.0-1_all.deb \
     && apt install /tmp/cuda-keyring.deb && rm /tmp/cuda-keyring.deb && \
+    sed -i 's|https://developer.download.nvidia.com/compute/cuda/repos|https://mirrors.cloud.tencent.com/nvidia-cuda|g' /etc/apt/sources.list.d/cuda-ubuntu2204-x86_64.list && \
     apt-get update && apt-get install -y datacenter-gpu-manager=1:{}
 """.format(
                 dcgm_version, dcgm_version
@@ -878,7 +880,7 @@ def install_miniconda(conda_version, target_machine):
                 FLAGS.version
             )
         )
-    miniconda_url = f"https://repo.anaconda.com/miniconda/Miniconda3-{conda_version}-Linux-{target_machine}.sh"
+    miniconda_url = f"https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-{conda_version}-Linux-{target_machine}.sh"
     if target_machine == "x86_64":
         sha_sum = "32d73e1bc33fda089d7cd9ef4c1be542616bd8e437d1f77afeeaf7afdb019787"
     else:
@@ -925,13 +927,14 @@ SHELL ["cmd", "/S", "/C"]
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Install docker docker buildx
-RUN apt-get update \
+RUN sed -i 's|http://archive.ubuntu.com/ubuntu|https://mirrors.tuna.tsinghua.edu.cn/ubuntu|g' /etc/apt/sources.list \
+        && apt-get update \
         && apt-get install -y ca-certificates curl gnupg \
         && install -m 0755 -d /etc/apt/keyrings \
         && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg \
         && chmod a+r /etc/apt/keyrings/docker.gpg \
         && echo \
-            "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+            "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu \
             "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
             tee /etc/apt/sources.list.d/docker.list > /dev/null \
         && apt-get update \
@@ -973,7 +976,8 @@ RUN apt-get update \
             wget \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install --upgrade pip && \
+RUN pip3 config --global set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
+    pip3 install --upgrade pip && \
     pip3 install --upgrade wheel setuptools docker
 
 # Install boost version >= 1.78 for boost::span
@@ -1099,7 +1103,6 @@ WORKDIR /opt
 COPY --chown=1000:1000 build/install tritonserver
 
 WORKDIR /opt/tritonserver
-COPY --chown=1000:1000 NVIDIA_Deep_Learning_Container_License.pdf .
 
 """
     if not FLAGS.no_core_build:
@@ -1263,7 +1266,7 @@ RUN apt-get update && \
     # Add dependencies needed for tensorrtllm backend
     if "tensorrtllm" in backends:
         be = "tensorrtllm"
-        url = "https://raw.githubusercontent.com/triton-inference-server/tensorrtllm_backend/{}/tools/gen_trtllm_dockerfile.py".format(
+        url = "https://ghproxy.com/https://raw.githubusercontent.com/0x1997/tensorrtllm_backend/{}/tools/gen_trtllm_dockerfile.py".format(
             backends[be]
         )
 
@@ -1404,7 +1407,6 @@ RUN rmdir /S/Q tritonserver || exit 0
 COPY --chown=1000:1000 build/install tritonserver
 
 WORKDIR /opt/tritonserver
-COPY --chown=1000:1000 NVIDIA_Deep_Learning_Container_License.pdf .
 
 """
     df += """
@@ -2204,8 +2206,8 @@ if __name__ == "__main__":
         "--github-organization",
         type=str,
         required=False,
-        default="https://github.com/triton-inference-server",
-        help='The GitHub organization containing the repos used for the build. Defaults to "https://github.com/triton-inference-server".',
+        default="https://ghproxy.com/https://github.com/triton-inference-server",
+        help='The GitHub organization containing the repos used for the build. Defaults to "https://ghproxy.com/https://github.com/triton-inference-server".',
     )
     parser.add_argument(
         "--version",

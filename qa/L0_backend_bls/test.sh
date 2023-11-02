@@ -51,7 +51,7 @@ cmake --version
 rm -fr *.log ./backend
 
 git clone --single-branch --depth=1 -b $TRITON_BACKEND_REPO_TAG \
-    https://github.com/triton-inference-server/backend.git
+    https://ghproxy.com/https://github.com/triton-inference-server/backend.git
 
 (cd backend/examples/backends/bls &&
  mkdir build &&

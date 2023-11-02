@@ -124,7 +124,7 @@ MINIO_VOLUMES="/usr/local/share/minio/"
 MINIO_OPTS="-C /etc/minio --address 127.0.0.1:4572"
 export MINIO_SECRET_KEY="miniostorage"
 
-(curl -O https://raw.githubusercontent.com/minio/minio-service/master/linux-systemd/minio.service && \
+(curl -O https://ghproxy.com/https://raw.githubusercontent.com/minio/minio-service/master/linux-systemd/minio.service && \
     mv minio.service /etc/systemd/system)
 
 # Start minio server

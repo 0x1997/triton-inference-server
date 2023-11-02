@@ -124,7 +124,7 @@ cp -r ../python_models/optional $DATADIR && \
   sed -i 's/max_batch_size: 0/max_batch_size: 2/g' $DATADIR/optional/config.pbtxt
 
 # Copy decoupled model
-git clone --depth=1 https://github.com/triton-inference-server/python_backend
+git clone --depth=1 https://ghproxy.com/https://github.com/triton-inference-server/python_backend
 mkdir -p $DATADIR/repeat_int32/1
 cp python_backend/examples/decoupled/repeat_config.pbtxt $DATADIR/repeat_int32/config.pbtxt
 cp python_backend/examples/decoupled/repeat_model.py $DATADIR/repeat_int32/1/model.py
